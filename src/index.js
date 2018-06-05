@@ -5,6 +5,7 @@ import * as fs from 'fs';
 const logger = new winston.Logger();
 
 switch ((process.env.NODE_ENV || '').toLowerCase()) {
+  // log into file
   case 'production': {
     const logDir = process.env.LOG_PATH || path.resolve('logs');
     if (!fs.existsSync(logDir)) {
@@ -20,9 +21,11 @@ switch ((process.env.NODE_ENV || '').toLowerCase()) {
     break;
   }
 
+  // don't log anything when running test
   case 'test':
     break;
 
+  // development
   default:
     logger.add(winston.transports.Console, {
       colorize: true,
